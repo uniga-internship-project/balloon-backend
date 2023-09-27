@@ -4,7 +4,7 @@ using Org.BouncyCastle.Asn1.Pkcs;
 using uniga_internship_project.Services.AuthorizeSerivice;
 using uniga_internship_project.Services.AuthorizeSerivice.Requests;
 
-namespace uniga_internship_project.Controllers.Requests
+namespace uniga_internship_project.Controllers
 {
     [Route("api/authorize/")]
     [ApiController]
