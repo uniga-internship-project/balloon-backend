@@ -16,11 +16,18 @@ namespace uniga_internship_project.Controllers
         {
             _authorizeService = authorizeService;
         }
-        [HttpPost("")]
+        [HttpPost("login")]
         public async Task<ActionResult<User>> Login([FromBody] LoginRequest request)
         {
             var result = await _authorizeService.Login(request);
             return Ok(result);
         }
+        [HttpPost("register")]
+        public async Task<ActionResult<User>> Register([FromBody] RegisterRequest request)
+        {
+            var result = await _authorizeService.Register(request);
+            return Ok(result);
+        }
+
     }
 }

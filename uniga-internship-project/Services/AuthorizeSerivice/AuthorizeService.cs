@@ -43,6 +43,7 @@ namespace uniga_internship_project.Services.AuthorizeSerivice
             {
                 Email = request.Email,
                 Password = hash,
+                RoleId = 1,
             };
             await _dataContext.User.AddAsync(newUser);
             await _dataContext.SaveChangesAsync();
