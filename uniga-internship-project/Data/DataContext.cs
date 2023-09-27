@@ -9,6 +9,6 @@ namespace uniga_internship_project.Data
         {
 
         }
-        public DbSet<Users> Users => Set<Users>();
+        public DbSet<User> User => Set<User>();
     }
 }

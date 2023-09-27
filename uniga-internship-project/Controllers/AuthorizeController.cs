@@ -17,7 +17,7 @@ namespace uniga_internship_project.Controllers
             _authorizeService = authorizeService;
         }
         [HttpPost("")]
-        public async Task<ActionResult<Users>> Login([FromBody] LoginRequest request)
+        public async Task<ActionResult<User>> Login([FromBody] LoginRequest request)
         {
             var result = await _authorizeService.Login(request);
             return Ok(result);

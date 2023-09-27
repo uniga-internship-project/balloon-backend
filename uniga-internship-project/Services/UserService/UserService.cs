@@ -18,41 +18,9 @@ namespace uniga_internship_project.Services.UserService
         {
             _dataContext = dataContext;
         }
-
-        public async Task<Users> CreateUser(CreateUserRequest request)
+        public async Task<User> GetUser(string token)
         {
-            var hash =  BCrypt.Net.BCrypt.HashPassword(request.Password, 10);
-            var newUser = new Users() 
-            {
-                Email = request.Email,
-                Password = hash,
-            };
-            await _dataContext.Users.AddAsync(newUser);
-            await _dataContext.SaveChangesAsync();
-            return newUser;
-        }
-
-        public async Task<bool> DeleteUser(int id)
-        {
-            var user = await _dataContext.Users.FindAsync(id);
-            if (user == null) 
-            {
-                throw new Exception();
-            }
-            _dataContext.Remove(user);
-            await _dataContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<List<Users>> GetAllUsers()
-        {
-            var users =  await _dataContext.Users.ToListAsync();
-            return users;
-        }
-
-        public async Task<Users> GetUser(int id)
-        {
-            var user = await _dataContext.Users.FindAsync(id);
+            var user = await _dataContext.User.FindAsync(token);
             if (user == null) 
             {
                 throw new Exception("Data Notfound!");
@@ -60,7 +28,7 @@ namespace uniga_internship_project.Services.UserService
             return user;
         }
 
-        public Task<Users> UpdateUser(int id)
+        public Task<User> UpdateUser(int id)
         {
             throw new NotImplementedException();
         }

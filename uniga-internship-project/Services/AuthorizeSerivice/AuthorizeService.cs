@@ -23,7 +23,7 @@ namespace uniga_internship_project.Services.AuthorizeSerivice
         }
         public async Task<string> Login(LoginRequest request)
         {
-            var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+            var user = await _dataContext.User.FirstOrDefaultAsync(u => u.Email == request.Email);
             if (user == null)
                 throw new Exception();
             if (BCrypt.Net.BCrypt.EnhancedVerify(request.Password, user.Password))
@@ -39,16 +39,16 @@ namespace uniga_internship_project.Services.AuthorizeSerivice
         public async Task<bool> Register(RegisterRequest request)
         {
             var hash = BCrypt.Net.BCrypt.HashPassword(request.Password, 10);
-            var newUser = new Users()
+            var newUser = new User()
             {
                 Email = request.Email,
                 Password = hash,
             };
-            await _dataContext.Users.AddAsync(newUser);
+            await _dataContext.User.AddAsync(newUser);
             await _dataContext.SaveChangesAsync();
             return true;
         }
-        private string TokenGenerate(Users user)
+        private string TokenGenerate(User user)
         {
             List<Claim> claims = new List<Claim> {
                 new Claim(ClaimTypes.Email, user.Email)
