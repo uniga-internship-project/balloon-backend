@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using uniga_internship_project.Services.AuthorizeSerivice;
 using uniga_internship_project.Services.AuthorizeSerivice.Requests;
 
@@ -14,6 +15,7 @@ namespace uniga_internship_project.Controllers
         {
             _authorizeService = authorizeService;
         }
+
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login([FromBody] LoginRequest request)
         {
