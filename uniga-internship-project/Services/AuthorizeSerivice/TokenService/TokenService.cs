@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using uniga_internship_project.Data;
 using uniga_internship_project.Services.AuthorizeSerivice.TokenService;
 
 namespace uniga_internship_project.Services.AuthorizeSerivice.Token
@@ -11,18 +12,23 @@ namespace uniga_internship_project.Services.AuthorizeSerivice.Token
     public class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;
-
-        public TokenService(IConfiguration configuration)
+        private readonly DataContext _dataContext;
+        public TokenService(IConfiguration configuration, DataContext dataContext)
         {
             _configuration = configuration;
+            _dataContext = dataContext;
         }
 
-        public string GenerateToken(User user)
+        public async Task<string> GenerateToken(User user)
         {
+            var roleId = await _dataContext.Role.FindAsync(user.RoleId);
+            var role = roleId.Name;
             // Create claims with user information
             var claims = new[]
             {
-            new Claim(ClaimTypes.Email, user.Email)
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, role),
+
             // Add more claims as needed (e.g., roles, user ID, etc.)
         };
 

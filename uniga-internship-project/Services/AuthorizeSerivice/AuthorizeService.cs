@@ -35,7 +35,7 @@ namespace uniga_internship_project.Services.AuthorizeSerivice
                 throw new Exception();
             }
 
-            string test = _tokenService.GenerateToken(user);
+            string test = await _tokenService.GenerateToken(user);
 
             return test;
         }
