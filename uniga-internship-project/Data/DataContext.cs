@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 using uniga_internship_project.Models;
 
 namespace uniga_internship_project.Data
@@ -11,6 +12,9 @@ namespace uniga_internship_project.Data
         }
         public DbSet<User> User => Set<User>();
         public DbSet<Role> Role => Set<Role>();
+        public DbSet<Skill> Skill => Set<Skill>();
+        public DbSet<Position> Position => Set<Position>();
+        public DbSet<Plan> Plan => Set<Plan>();
         public DbSet<Team> Team => Set<Team>();
     }
 }
