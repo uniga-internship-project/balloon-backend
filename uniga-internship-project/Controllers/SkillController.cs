@@ -21,11 +21,11 @@ namespace uniga_internship_project.Controllers
             var result = await skillService.Get(Id);
             return Ok(result);
         }
-        [HttpPost("Create")]
-        public async Task<ActionResult<bool>> Create([FromBody]string name)
-        {
-            var result = await skillService.create(name);
-            return Ok(result);
-        }
+        //[HttpPost("Create")]
+        //public async Task<ActionResult<bool>> Create([FromBody]string name)
+        //{
+        //    var result = await skillService.create(name);
+        //    return Ok(result);
+        //}
     }
 }
