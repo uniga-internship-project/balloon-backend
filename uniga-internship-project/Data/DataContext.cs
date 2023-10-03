@@ -10,5 +10,6 @@ namespace uniga_internship_project.Data
 
         }
         public DbSet<User> User => Set<User>();
+        public DbSet<Role> Role => Set<Role>();
     }
 }

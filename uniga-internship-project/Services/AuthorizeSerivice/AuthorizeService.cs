@@ -1,39 +1,42 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Org.BouncyCastle.Asn1.Ocsp;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 using uniga_internship_project.Data;
+using uniga_internship_project.Models.Dto;
 using uniga_internship_project.Services.AuthorizeSerivice.Requests;
-using Microsoft.IdentityModel.JsonWebTokens;
+using uniga_internship_project.Services.AuthorizeSerivice.TokenService;
+
 namespace uniga_internship_project.Services.AuthorizeSerivice
 {
     public class AuthorizeService : IAuthorizeService
     {
         private readonly DataContext _dataContext;
         private readonly IConfiguration _configuration;
-
-        public AuthorizeService(DataContext dataContext, IConfiguration configuration)
+        private readonly ITokenService _tokenService;
+        public AuthorizeService(DataContext dataContext, IConfiguration configuration, ITokenService tokenService)
         {
             _dataContext = dataContext;
             _configuration = configuration;
+            _tokenService = tokenService;
         }
-        public async Task<string> Login(LoginRequest request)
+        public async Task<AuthorizeDto> Login(LoginRequest request)
         {
             var user = await _dataContext.User.FirstOrDefaultAsync(u => u.Email == request.Email);
+
             if (user == null)
-                throw new Exception();
+                throw new Exception("User Not found!");
             if (BCrypt.Net.BCrypt.EnhancedVerify(request.Password, user.Password))
             {
-                throw new Exception();
+                throw new Exception("E-mail or password incorrect!");
             }
-            //token 
-            string token = TokenGenerate(user);
-            
-            return token;
+
+            string token = await _tokenService.GenerateToken(user);
+
+            var dto = new AuthorizeDto()
+            {
+                Token = token,
+                UserId = user.Id,
+            };
+
+            return dto;
         }
 
         public async Task<bool> Register(RegisterRequest request)
@@ -48,25 +51,6 @@ namespace uniga_internship_project.Services.AuthorizeSerivice
             await _dataContext.User.AddAsync(newUser);
             await _dataContext.SaveChangesAsync();
             return true;
-        }
-        private string TokenGenerate(User user)
-        {
-            List<Claim> claims = new List<Claim> {
-                new Claim(ClaimTypes.Email, user.Email)
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSetting:Token").Value!));
-
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
-
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddDays(3),
-                signingCredentials: creds
-                );
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
         }
     }
 }
