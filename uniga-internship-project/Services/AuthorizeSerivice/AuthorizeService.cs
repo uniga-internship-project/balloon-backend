@@ -1,14 +1,7 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Org.BouncyCastle.Asn1.Ocsp;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 using uniga_internship_project.Data;
+using uniga_internship_project.Models.Dto;
 using uniga_internship_project.Services.AuthorizeSerivice.Requests;
-using Microsoft.IdentityModel.JsonWebTokens;
 using uniga_internship_project.Services.AuthorizeSerivice.TokenService;
 
 namespace uniga_internship_project.Services.AuthorizeSerivice
@@ -24,20 +17,26 @@ namespace uniga_internship_project.Services.AuthorizeSerivice
             _configuration = configuration;
             _tokenService = tokenService;
         }
-        public async Task<string> Login(LoginRequest request)
+        public async Task<AuthorizeDto> Login(LoginRequest request)
         {
             var user = await _dataContext.User.FirstOrDefaultAsync(u => u.Email == request.Email);
 
             if (user == null)
-                throw new Exception();
+                throw new Exception("User Not found!");
             if (BCrypt.Net.BCrypt.EnhancedVerify(request.Password, user.Password))
             {
-                throw new Exception();
+                throw new Exception("E-mail or password incorrect!");
             }
 
-            string test = await _tokenService.GenerateToken(user);
+            string token = await _tokenService.GenerateToken(user);
 
-            return test;
+            var dto = new AuthorizeDto()
+            {
+                Token = token,
+                UserId = user.Id,
+            };
+
+            return dto;
         }
 
         public async Task<bool> Register(RegisterRequest request)
