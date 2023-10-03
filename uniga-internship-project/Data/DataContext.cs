@@ -15,6 +15,7 @@ namespace uniga_internship_project.Data
         public DbSet<Skill> Skill => Set<Skill>();
         public DbSet<Position> Position => Set<Position>();
         public DbSet<Plan> Plan => Set<Plan>();
+        public DbSet<Team> Team => Set<Team>();
 
     }
 }
