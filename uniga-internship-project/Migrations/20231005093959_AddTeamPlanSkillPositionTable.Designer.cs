@@ -10,8 +10,8 @@ using uniga_internship_project.Data;
 namespace uniga_internship_project.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231003055247_PlanTable")]
-    partial class PlanTable
+    [Migration("20231005093959_AddTeamPlanSkillPositionTable")]
+    partial class AddTeamPlanSkillPositionTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,21 @@ namespace uniga_internship_project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skill");
+                });
+
+            modelBuilder.Entity("uniga_internship_project.Models.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Team");
                 });
 
             modelBuilder.Entity("uniga_internship_project.Models.User", b =>

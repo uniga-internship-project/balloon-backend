@@ -18,6 +18,46 @@ namespace uniga_internship_project.Migrations
                 .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("uniga_internship_project.Models.Plan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Plan");
+                });
+
+            modelBuilder.Entity("uniga_internship_project.Models.Position", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Position");
+                });
+
             modelBuilder.Entity("uniga_internship_project.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -31,6 +71,24 @@ namespace uniga_internship_project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("uniga_internship_project.Models.Skill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Skill");
                 });
 
             modelBuilder.Entity("uniga_internship_project.Models.Team", b =>
@@ -65,14 +123,9 @@ namespace uniga_internship_project.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("TeamId");
 
                     b.ToTable("User");
                 });
@@ -85,23 +138,10 @@ namespace uniga_internship_project.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("uniga_internship_project.Models.Team", "Team")
-                        .WithMany("User")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Role");
-
-                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("uniga_internship_project.Models.Role", b =>
-                {
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("uniga_internship_project.Models.Team", b =>
                 {
                     b.Navigation("User");
                 });
