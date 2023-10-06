@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using uniga_internship_project.Services.AuthorizeSerivice.Requests;
 using uniga_internship_project.Services.SkillSevice;
 using uniga_internship_project.Services.UserService;
 

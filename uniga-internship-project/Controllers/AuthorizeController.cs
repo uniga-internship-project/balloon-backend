@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using uniga_internship_project.Services.AuthorizeSerivice;
-using uniga_internship_project.Services.AuthorizeSerivice.Requests;
+using uniga_internship_project.Services.Requests;
 
 namespace uniga_internship_project.Controllers
 {
@@ -17,13 +16,13 @@ namespace uniga_internship_project.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login([FromBody] LoginRequest request)
+        public async Task<ActionResult<User>> Login([FromBody] AuthorizeRequest request)
         {
             var result = await _authorizeService.Login(request);
             return Ok(result);
         }
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register([FromBody] RegisterRequest request)
+        public async Task<ActionResult<User>> Register([FromBody] AuthorizeRequest request)
         {
             var result = await _authorizeService.Register(request);
             return Ok(result);

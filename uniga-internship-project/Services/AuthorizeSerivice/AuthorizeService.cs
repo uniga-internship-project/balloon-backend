@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using uniga_internship_project.Data;
 using uniga_internship_project.Models.Dto;
-using uniga_internship_project.Services.AuthorizeSerivice.Requests;
 using uniga_internship_project.Services.AuthorizeSerivice.TokenService;
+using uniga_internship_project.Services.Requests;
 
 namespace uniga_internship_project.Services.AuthorizeSerivice
 {
@@ -17,7 +17,7 @@ namespace uniga_internship_project.Services.AuthorizeSerivice
             _configuration = configuration;
             _tokenService = tokenService;
         }
-        public async Task<AuthorizeDto> Login(LoginRequest request)
+        public async Task<AuthorizeDto> Login(AuthorizeRequest request)
         {
             var user = await _dataContext.User.FirstOrDefaultAsync(u => u.Email == request.Email);
 
@@ -39,7 +39,7 @@ namespace uniga_internship_project.Services.AuthorizeSerivice
             return dto;
         }
 
-        public async Task<bool> Register(RegisterRequest request)
+        public async Task<bool> Register(AuthorizeRequest request)
         {
             var hash = BCrypt.Net.BCrypt.HashPassword(request.Password, 10);
             var newUser = new User()
