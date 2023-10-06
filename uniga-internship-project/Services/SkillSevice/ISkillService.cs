@@ -1,8 +1,11 @@
-﻿namespace uniga_internship_project.Services.SkillSevice
+﻿using uniga_internship_project.Services.Criteria;
+
+namespace uniga_internship_project.Services.SkillSevice
 {
     public interface ISkillService
     {
         Task<Skill> Get(int Id);
-        Task<bool> create(string name); 
+        Task<bool> create(string name);
+        Task<List<Skill>> Search (SearchSkillCrriteria request);
     }
 }

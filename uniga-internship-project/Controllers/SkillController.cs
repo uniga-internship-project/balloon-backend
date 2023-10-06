@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using uniga_internship_project.Services.Criteria;
 using uniga_internship_project.Services.SkillSevice;
 using uniga_internship_project.Services.UserService;
 
@@ -27,6 +28,13 @@ namespace uniga_internship_project.Controllers
         public async Task<ActionResult<bool>> Create([FromBody]string name)
         {
             var result = await skillService.create(name);
+            return Ok(result);
+        }        
+        [HttpPost("Search")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<List<Skill>>> Search([FromBody]SearchSkillCrriteria request)
+        {
+            var result = await skillService.Search(request);
             return Ok(result);
         }
     }
