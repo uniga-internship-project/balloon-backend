@@ -48,6 +48,23 @@ namespace uniga_internship_project.Services.AuthorizeSerivice
                 Password = hash,
                 RoleId = 1,
             };
+            var isRoleExist = await _dataContext.Role.ToListAsync();
+            if (isRoleExist.Count == 0) 
+            {
+                var user = new Role()
+                {
+                    Id = 1,
+                    Name = "User"
+                };
+                var admin = new Role()
+                {
+                    Id = 2,
+                    Name = "Admin"
+                };
+                await _dataContext.Role.AddAsync(user);
+                await _dataContext.Role.AddAsync(admin);
+                await _dataContext.SaveChangesAsync();
+            }
             await _dataContext.User.AddAsync(newUser);
             await _dataContext.SaveChangesAsync();
             return true;
