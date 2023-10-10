@@ -32,7 +32,7 @@ namespace uniga_internship_project.Controllers
         }        
         [HttpPost("Search")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<List<Skill>>> Search([FromBody]SearchSkillCrriteria request)
+        public async Task<ActionResult<List<Skill>>> Search([FromBody]SearchSkillCriteria request)
         {
             var result = await skillService.Search(request);
             return Ok(result);

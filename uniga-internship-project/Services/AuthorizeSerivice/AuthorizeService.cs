@@ -58,7 +58,7 @@ namespace uniga_internship_project.Services.AuthorizeSerivice
                 };
                 var admin = new Role()
                 {
-                    Id = 2,
+                    Id = 1,
                     Name = "Admin"
                 };
                 await _dataContext.Role.AddAsync(user);

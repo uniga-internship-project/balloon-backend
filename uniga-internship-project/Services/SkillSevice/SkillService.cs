@@ -36,7 +36,7 @@ namespace uniga_internship_project.Services.SkillSevice
             return skill;
         }
 
-        public async Task<List<Skill>> Search(SearchSkillCrriteria request)
+        public async Task<List<Skill>> Search(SearchSkillCriteria request)
         {
             var query = _dataContext.Skill.AsQueryable();
             if (!string.IsNullOrEmpty(request.Name)) 
